@@ -23,7 +23,7 @@ Level-1 raw data, including FASTQ files for the transcriptome and raw LC-MS/MS d
 ---
 
 ## 2. Data Description  
-The following table provides an overview description of the datasets used in this project:
+The following table provides an overview description of the level-2 datasets used in this project:
 
 | Data_name                                      | Data_type       | Description                                              |
 |------------------------------------------------|-----------------|----------------------------------------------------------|
