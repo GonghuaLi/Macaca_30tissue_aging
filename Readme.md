@@ -9,7 +9,7 @@
   
 **Code & data analysis contact**: Gong-Hua Li (ligonghua@mail.kiz.ac.cn)  
   
-**Last Update**: 2025-03-20    
+**Last Update**: 2025-03-25    
 
 ---
 
@@ -88,7 +88,7 @@ please change the line 27:
 
 **rootdir <- "/home/ligh/pubproject/MCMT/"**   to  your own path, such as **rootdir <- "/your/path/"**
 
-**Note:** in your path, a "data" subdirectory is required for reproduce our results, which contains all data that is available at figshare ((https://doi.org/10.6084/m6089.figshare.26963386).
+**Note:** in your path, a "data" subdirectory is required for reproduce our results, which is available at figshare ((https://doi.org/10.6084/m6089.figshare.26963386).
 
 
 ### Generate HTML Report
