@@ -43,6 +43,7 @@ The following table provides an overview description of the level-2 datasets use
 ---
 
 ## 3. Install Required Packages
+All code is written in R. Some required packages should be installed in R before reproducing the results. The installation process typically takes less than one hour, depending on network speed and the local R environment.
 
 ```r
 # R Packages from CRAN
@@ -82,6 +83,7 @@ if (!require("MetaDE", quietly = TRUE)) {
 ---
 
 ## 4. Run the RMarkdown Analysis
+To reproduce the results, simply run a one-line bash command to generate an HTML report, a PDF report, or both. On a standard desktop computer, the process takes approximately 2–3 hours once all required packages have been successfully installed.
 
 ### Change the rootdir for the code file "Code_for_Macaca_30tissue_aging.Rmd"
 please change the line 27:
