@@ -2754,6 +2754,7 @@ Heatmap(
 
 dev.off()
 
+
 # just for plot visualization
 heatmap_grob <- grid.grabExpr(draw(pp))
 grid.draw(heatmap_grob)
@@ -3900,6 +3901,7 @@ grid.draw(heatmap_grob)
 
 ```{r}
 p16 <- file2frame("./data/P16_tissues_v20230419.txt")
+class_abbr <- c("Juvenile" = "Juv", "Young" = "Yng","Elderly" = "Eld")
 utissue <- unique(p16$Tissue)
 tpvalues <- data.frame(tissue = utissue,
   p_Juvenile_vs_Elderly = rep(1, length(utissue)),
@@ -3909,12 +3911,13 @@ breaks_B <- c(3, 3, 3, 3, 2, 2, 0.06, 3)
 for (i in 1:length(utissue)) {
   tmpdata <- p16[p16$Tissue == utissue[i], ]
   tmpdata$Area.Density.log2 <- tmpdata$Area.Density * 1e3
+  tmpdata$class <- class_abbr[tmpdata$class]
   tmpdata$class <- factor(x = tmpdata$class,
-    levels = c("Juvenile", "Young", "Elderly"))
+    levels = c("Juv", "Yng", "Eld"))
   tmpp1 <- t.test(Area.Density ~ class, data =
-    tmpdata, subset = tmpdata$class != "Young")$p.value
+    tmpdata, subset = tmpdata$class != "Yng")$p.value
   tmpp2 <- t.test(Area.Density ~ class, data =
-    tmpdata, subset = tmpdata$class != "Juvenile")$p.value
+    tmpdata, subset = tmpdata$class != "Juv")$p.value
   tpvalues$p_Juvenile_vs_Elderly[i] <- tmpp1
   tpvalues$p_Young_vs_Elderly[i] <- tmpp2
 
@@ -3922,21 +3925,24 @@ for (i in 1:length(utissue)) {
     by = list(tmpdata$class), FUN = mean, na.rm = T)$x,
   tsd = aggregate(tmpdata$Area.Density.log2,
     by = list(tmpdata$class), FUN = sd, na.rm = T)$x,
-  class = factor(x = c("Juvenile", "Young", "Elderly"),
-    levels = c("Juvenile", "Young", "Elderly"))
+  class = factor(x = c("Juv", "Yng", "Eld"),
+    levels = c("Juv", "Yng", "Eld"))
   )
 
   thepath <- paste0("./results/experiments/Figure5x_p16_stats", utissue[i], ".pdf")
-  pdf(thepath)
+  pdf(thepath,width = 5.5)
   p <- ggplot(df2, aes(x = class, y = tmean, fill = class)) +
     geom_bar(stat = "identity", color = "black",
       position = position_dodge(), alpha = 0.5, size = 1.5) +
     geom_errorbar(aes(ymin = tmean - tsd, ymax = tmean + tsd),
-      width = .3, size = 1.5) +
-    lghplot.addtheme(size = 28, sizex = 26, sizey = 26) +
+      width = .5, size = 1.5) +
+    geom_jitter(data = tmpdata, aes(x = class, y = Area.Density.log2),
+              width = 0.25, , height = 0, size = 6, shape = 21,
+              color = "black", fill = "#FFFFFF99", stroke = 0.8) +
+    lghplot.addtheme(size = 30, sizex = 30, sizey = 30) +
     scale_fill_manual(values = c("#008B45FF", "#3B4992FF", "#EE0000FF")) +
     theme(axis.line = element_line(size = 1.2)) + xlab("") +
-    ylab(bquote("Area Density " ~ italic(x10)^italic(3))) +
+    ylab(bquote("Area density " ~ italic(x10)^italic(3))) +
     ggtitle(utissue[i])
   if (i <= 8) {
     p <- p + scale_y_break(breaks = c(breaks_A[i], breaks_B[i]),
@@ -3945,7 +3951,7 @@ for (i in 1:length(utissue)) {
   print(p)
   dev.off()
 }
-
+writetxt(tpvalues,'./results/experiments/tpvalues_p16.txt')
 tpvalues
 ```
 
@@ -3954,6 +3960,7 @@ tpvalues
 p21 <- file2frame("./data/P21_tissues_v20230419.txt")
 breaks_A <- c(0.05, 0.4, 0.4, 0.4, 0.1, 0.4, 0.4, 0.05)
 breaks_B <- c(1, 4, 4, 4, 2, 4, 4, 1)
+class_abbr <- c("Juvenile" = "Juv", "Young" = "Yng","Elderly" = "Eld")
 utissue <- unique(p21$Tissue)
 tpvalues <- data.frame(tissue = utissue,
   p_Juvenile_vs_Elderly = rep(1, length(utissue)),
@@ -3962,12 +3969,13 @@ tpvalues <- data.frame(tissue = utissue,
 for (i in 1:length(utissue)) {
   tmpdata <- p21[p21$Tissue == utissue[i], ]
   tmpdata$Area.Density.log2 <- tmpdata$Area.Density * 1e3
+  tmpdata$class <- class_abbr[tmpdata$class]
   tmpdata$class <- factor(x = tmpdata$class,
-    levels = c("Juvenile", "Young", "Elderly"))
+    levels = c("Juv", "Yng", "Eld"))
   tmpp1 <- t.test(Area.Density ~ class, data = tmpdata,
-    subset = tmpdata$class != "Young")$p.value
+    subset = tmpdata$class != "Yng")$p.value
   tmpp2 <- t.test(Area.Density ~ class, data = tmpdata,
-    subset = tmpdata$class != "Juvenile")$p.value
+    subset = tmpdata$class != "Juv")$p.value
   tpvalues$p_Juvenile_vs_Elderly[i] <- tmpp1
   tpvalues$p_Young_vs_Elderly[i] <- tmpp2
 
@@ -3975,18 +3983,21 @@ for (i in 1:length(utissue)) {
     by = list(tmpdata$class), FUN = mean, na.rm = T)$x,
   tsd = aggregate(tmpdata$Area.Density.log2,
     by = list(tmpdata$class), FUN = sd, na.rm = T)$x,
-  class = factor(x = c("Juvenile", "Young", "Elderly"),
-    levels = c("Juvenile", "Young", "Elderly"))
+  class = factor(x = c("Juv", "Yng", "Eld"),
+    levels = c("Juv", "Yng", "Eld"))
   )
   thepath <- paste0("./results/experiments/Figure5x_p21_stats", utissue[i], ".pdf")
-  pdf(thepath)
+  pdf(thepath,width = 5.5)
   p <- ggplot(df2, aes(x = class, y = tmean, fill = class)) +
     geom_bar(stat = "identity",
       color = "black", position = position_dodge(),
       alpha = 0.5, size = 1.5) +
     geom_errorbar(aes(ymin = tmean - tsd, ymax = tmean + tsd),
-      width = .3, size = 1.5) +
-    lghplot.addtheme(size = 28, sizex = 26, sizey = 26) +
+      width = .5, size = 1.5) +
+    geom_jitter(data = tmpdata, aes(x = class, y = Area.Density.log2),
+              width = 0.25, , height = 0, size = 6, shape = 21,
+              color = "black", fill = "#FFFFFF99", stroke = 0.8) +
+    lghplot.addtheme(size = 30, sizex = 30, sizey = 30) +
     scale_fill_manual(values = c("#008B45FF", "#3B4992FF", "#EE0000FF")) +
     theme(axis.line = element_line(size = 1.2)) + xlab("") +
     ylab(bquote("Area Density " ~ italic(x10)^italic(3))) +
@@ -3998,7 +4009,7 @@ for (i in 1:length(utissue)) {
   print(p)
   dev.off()
 }
-
+writetxt(tpvalues,'./results/experiments/tpvalues_p21.txt')
 tpvalues
 ```
 
@@ -4007,18 +4018,21 @@ tpvalues
 ```{r}
 Cellcounts <- file2frame("./data/cell_counts_20240802.txt")
 
+class_abbr <- c("Juvenile" = "Juv", "Young" = "Yng","Elderly" = "Eld")
 utissue <- unique(Cellcounts$Tissue)
 tpvalues <- data.frame(tissue = utissue,
   p_Juvenile_vs_Elderly = rep(1, length(utissue)),
   p_Young_vs_Elderly = rep(1, length(utissue)))
+
 for (i in 1:length(utissue)) {
   tmpdata <- Cellcounts[Cellcounts$Tissue == utissue[i], ]
+  tmpdata$class <- class_abbr[tmpdata$class]
   tmpdata$class <- factor(x = tmpdata$class,
-    levels = c("Juvenile", "Young", "Elderly"))
+    levels = c("Juv", "Yng", "Eld"))
   tmpp1 <- t.test(number ~ class, data = tmpdata,
-    subset = tmpdata$class != "Young")$p.value
+    subset = tmpdata$class != "Yng")$p.value
   tmpp2 <- t.test(number ~ class, data = tmpdata,
-    subset = tmpdata$class != "Juvenile")$p.value
+    subset = tmpdata$class != "Juv")$p.value
   tpvalues$p_Juvenile_vs_Elderly[i] <- tmpp1
   tpvalues$p_Young_vs_Elderly[i] <- tmpp2
 
@@ -4026,34 +4040,28 @@ for (i in 1:length(utissue)) {
     by = list(tmpdata$class), FUN = mean, na.rm = T)$x,
   tsd = aggregate(tmpdata$number,
     by = list(tmpdata$class), FUN = sd, na.rm = T)$x,
-  class = factor(x = c("Juvenile", "Young", "Elderly"),
-    levels = c("Juvenile", "Young", "Elderly"))
+  class = factor(x = c("Juv", "Yng", "Eld"),
+    levels = c("Juv", "Yng", "Eld"))
   )
   thepath <- paste0("./results/experiments/Extendfigure_HE_cellcounts_",
     utissue[i], ".pdf")
-  pdf(thepath)
+  pdf(thepath,height = 5.2,width = 5.2)
   p <- ggplot(df2, aes(x = class, y = tmean, fill = class)) +
     geom_bar(stat = "identity", color = "black",
       position = position_dodge(), alpha = 0.5, size = 1.5) +
     geom_errorbar(aes(ymin = tmean - tsd, ymax = tmean + tsd),
-      width = .3, size = 1.5) +
-    lghplot.addtheme(size = 28, sizex = 26, sizey = 26) +
+      width = .5, size = 1.5) +
+    geom_jitter(data = tmpdata, aes(x = class, y = number),
+              width = 0.25, , height = 0, size = 6, shape = 21,
+              color = "black", fill = "#FFFFFF99", stroke = 0.8) +
+    lghplot.addtheme(size = 30, sizex = 30, sizey = 30) +
     scale_fill_manual(values = c("#008B45FF", "#3B4992FF", "#EE0000FF")) +
     theme(axis.line = element_line(size = 1.2)) + xlab("") +
-    ylab("Number of parenchymal cells") + ggtitle(utissue[i])
-  print(p)
-
-
-  dev.off()
-
-  thepath1 <- paste0("./results/experiments/Extendfigure_HE_cellcounts_",
-    utissue[i], ".png")
-  png(thepath1)
+    ylab("# of parenchymal cells") + ggtitle(utissue[i])
   print(p)
   dev.off()
-
 }
-
+writetxt(tpvalues,'./results/experiments/tpvalues_cellcounts.txt')
 tpvalues
 ```
 
