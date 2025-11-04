@@ -1,5 +1,5 @@
 
-# A multi-omics molecular landscape of 30 tissues in aging female rhesus macaques (Macaca mulatta)
+# A multi-omics molecular landscape of 30 tissues in aging female rhesus macaques
 
 **Code author**: Gong-Hua Li 
   
@@ -103,5 +103,6 @@ Rscript -e "rmarkdown::render('Code_for_Macaca_30tissue_aging.Rmd', output_file=
 ```bash
 Rscript -e "rmarkdown::render('Code_for_Macaca_30tissue_aging.Rmd', output_format='pdf_document', output_file='Code_to_Results.pdf')"
 ```
+
 
 
