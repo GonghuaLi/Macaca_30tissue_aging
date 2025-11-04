@@ -16,7 +16,7 @@
 ## 1. Data Availability  
 The omics data are freely and publicly available. 
 
-Level-2 data, including transcriptome raw counts and log2 peak areas for the proteome and metabolome, are accessible on figshare (https://doi.org/10.6084/m6089.figshare.26963386).  
+Level-2 data, including transcriptome raw counts and log2 peak areas for the proteome and metabolome, are accessible on figshare (https://doi.org/10.6084/m9.figshare.26963386).  
 
 For the level-1 raw data, the raw FASTQ files of the transcriptome have been deposited in the Genome Sequence Archive at the National Genomics Data Center (**GSA: CRA026248**), publicly accessible at https://ngdc.cncb.ac.cn/gsa. The raw LC-MS/MS data for the proteome have been deposited to the ProteomeXchange Consortium via the PRIDE partner repository with the dataset identifier **PXD066108** and also deposited to OMIX (https://ngdc.cncb.ac.cn/omix, accession no. **OMIX001778**). The raw LC-MS/MS data for the metabolome are deposited in OMIX (https://ngdc.cncb.ac.cn/omix, accession no. **OMIX001779**).
 
@@ -103,3 +103,4 @@ Rscript -e "rmarkdown::render('Code_for_Macaca_30tissue_aging.Rmd', output_file=
 ```bash
 Rscript -e "rmarkdown::render('Code_for_Macaca_30tissue_aging.Rmd', output_format='pdf_document', output_file='Code_to_Results.pdf')"
 ```
+
