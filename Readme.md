@@ -10,6 +10,7 @@
 **Code & data analysis contact**: Gong-Hua Li (ligonghua@mail.kiz.ac.cn)  
 
 **Citation**: Li, GH., Zhu, XQ., Xiao, FH. et al. A multi-omics molecular landscape of 30 tissues in aging female rhesus macaques. **Nat Methods** (2025). https://doi.org/10.1038/s41592-025-02912-y
+
 ---
 
 ## 1. Data Availability  
@@ -102,6 +103,7 @@ Rscript -e "rmarkdown::render('Code_for_Macaca_30tissue_aging.Rmd', output_file=
 ```bash
 Rscript -e "rmarkdown::render('Code_for_Macaca_30tissue_aging.Rmd', output_format='pdf_document', output_file='Code_to_Results.pdf')"
 ```
+
 
 
 
